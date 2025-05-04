@@ -72,7 +72,7 @@ def main():
 
         if df is not None:
             debits_df = df[df["Debit/Credit"] == "Debit"].copy()
-            credits_df = df[df["Debit/Credit"] == "Credit"].copy()
+            credits_df = df[(df["Debit/Credit"] == "Credit") & (df["Status"] != "REVERSED")].copy()
 
             st.session_state.debits_df = debits_df.copy()
 
@@ -135,6 +135,9 @@ def main():
 
                 st.write(debits_df)
             with tab2:
+                st.subheader("Payments Summary")
+                total_payments = credits_df["Amount"].sum()
+                st.metric("Total Payments", f"{total_payments:,.2f} AED")
                 st.write(credits_df)  
 
 main()
