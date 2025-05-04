@@ -53,7 +53,7 @@ def load_transactions(file):
         return None
     
 
-def add_keyword(category, keyword):
+def add_keyword_to_category(category, keyword):
     keyword = keyword.strip()
     if keyword and keyword not in st.session_state.categories[category]:
         st.session_state.categories[category].append(keyword)
@@ -102,7 +102,14 @@ def main():
 
                 save_button = st.button("Apply Changes", type="primary")
                 if save_button:
-                    pass
+                    for idx, row in edited_df.iterrows():
+                        if new_category == st.session_state.debits_df.at[idx, "Category"]:
+                            continue
+
+                        details = row["Details"]
+                        new_category = row["Category"]
+                        st.session_state.debits_df.at[idx, "Category"] = new_category
+                        add_keyword_to_category(new_category, details)
 
                 st.write(debits_df)
             with tab2:
