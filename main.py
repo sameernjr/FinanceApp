@@ -128,8 +128,10 @@ def main():
                     category_totals,
                     values="Amount",
                     names="Category",
-                    title="Expenses by Category",
+                    title="Expenses by Category"
                 )
+
+                st.plotly_chart(fig, use_container_width=True)
 
                 st.write(debits_df)
             with tab2:
