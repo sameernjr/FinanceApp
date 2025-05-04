@@ -118,8 +118,17 @@ def main():
                 st.dataframe(
                     category_totals,
                     column_config={
-                        "Amount": st.column_config.NumberColumn()
-                    }
+                        "Amount": st.column_config.NumberColumn("Total Amount", format="%.2f AED")
+                    },
+                    use_container_width=True,
+                    hide_index=True
+                )
+
+                fig = px.pie(
+                    category_totals,
+                    values="Amount",
+                    names="Category",
+                    title="Expenses by Category",
                 )
 
                 st.write(debits_df)
